@@ -323,6 +323,12 @@ fdt-claim-reserve
          r@ set-node
          s" phandle" delete-property
          s" linux,phandle" delete-property
+         dup hv-update-phandle dup 0 <> IF
+	    \ Ignore hcall not implemented error, print error otherwise
+	    dup -2 <> IF ." HV-UPDATE-PHANDLE error: " . cr ELSE drop THEN
+         ELSE
+	    drop
+         THEN
       ELSE
          diagnostic-mode? IF
             cr ." Warning: Did not replace phandle in " r@ node>path type cr
