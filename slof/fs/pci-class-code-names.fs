@@ -238,6 +238,12 @@
         ENDCASE
 ;
 
+: pci-class-name-12 ( addr -- str len )
+        pci-class@ 8 rshift FF and CASE
+        dup OF s" processing-accelerator" ENDOF
+        ENDCASE
+;
+
 \ create a string holding the predefined Class-Code-Names
 : pci-class-name ( addr -- str len )
         dup pci-class@ 10 rshift CASE
@@ -259,6 +265,7 @@
         0F  OF pci-class-name-0F ENDOF
         10  OF pci-class-name-10 ENDOF
         11  OF pci-class-name-11 ENDOF
+        12  OF pci-class-name-12 ENDOF
         dup OF drop s" unknown"  ENDOF
         ENDCASE
 ;
